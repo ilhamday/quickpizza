@@ -1,0 +1,3 @@
+.pytest_cache
+pytestdebug.log
+tests/__pycache__

@@ -41,3 +41,23 @@ def test_network_offline(page: Page, context):
     
     page.get_by_role("button", name="Refresh network status").click()
     expect(page.get_by_text("Network Status: false")).to_be_visible()
+
+# timezone
+def test_timezone(browser):
+    context = browser.new_context(timezone_id="Asia/Jakarta")
+    page = context.new_page()
+    
+    page.goto("https://quickpizza.grafana.com/browser.php")
+    expect(page.locator("#timezone-info-display")).to_have_text("Timezone: Asia/Jakarta")
+    
+    context.close()
+
+# User Agent
+def test_user_agent(browser):
+    context = browser.new_context(user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36')
+    page =  context.new_page()
+
+    page.goto('https://quickpizza.grafana.com/browser.php')
+    expect(page.locator('#useragent-info-display')).to_have_text('Your UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36')
+
+    context.close()

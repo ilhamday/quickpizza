@@ -7,15 +7,14 @@ def test_homepage_title(page: Page):
     expect(page).to_have_title("")
 
 def test_geolocation(page: Page, context):
-    context.grant_permissions(["geolocation"])
+    context.set_geolocation({"latitude": 37.77, "longitude": -122.42}) # San Francisco
+
     page.goto("https://quickpizza.grafana.com/browser.php")
     # find a button with "Get geolocation" text
     page.get_by_role("button", name="Get geolocation").click()
-
-    expect(page.get_by_text("Lat: ? Long: ?")).not_to_be_visible()
-
-    lat_long_text = page.locator("text=Lat:").text_content()
-    assert "?" not in lat_long_text
+    
+    expect(page.locator("#geolocation-info-display")).to_contain_text("37.77")
+    expect(page.locator("#geolocation-info-display")).to_contain_text("-122.42")
 
 # 2 - Locale-info-display
 def test_locale(page: Page):

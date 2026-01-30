@@ -61,3 +61,19 @@ def test_user_agent(browser):
     expect(page.locator('#useragent-info-display')).to_have_text('Your UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36')
 
     context.close()
+
+# Cookies
+def test_cookie(page: Page, context):
+    context.add_cookies([{
+        "name": "test_cookie_id_001",
+        "value": "1234value1234",
+        "domain": ".grafana.com",
+        "path": "/browser.php"
+    }])
+
+    page.goto('https://quickpizza.grafana.com/browser.php')
+
+    page.get_by_role("button", name="Refresh cookies").click()
+    #assert cookie for name=value
+    expect(page.locator("#cookies-info-display")).to_contain_text("test_cookie_id_001=1234value1234")
+    time.sleep(4)

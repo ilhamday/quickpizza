@@ -138,3 +138,8 @@ def test_disabled_field_text(page:Page):
     page.goto('https://quickpizza.grafana.com/browser.php')
 
     expect(page.locator("#input-text-disabled")).to_be_disabled()
+
+def test_hidden_field_text(page:Page):
+    page.goto('https://quickpizza.grafana.com/browser.php')
+
+    expect(page.locator("#input-text-hidden")).to_be_hidden()

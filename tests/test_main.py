@@ -133,3 +133,8 @@ def test_normal_input_text_field(page: Page):
 
     input_text_field.clear()
     expect(text_info).to_have_text("You've just removed everything from the input text field")
+
+def test_disabled_field_text(page:Page):
+    page.goto('https://quickpizza.grafana.com/browser.php')
+
+    expect(page.locator("#input-text-disabled")).to_be_disabled()

@@ -110,3 +110,26 @@ def test_increment(page:Page):
     for i in range(1,6):
         btn_increment.click()
         expect(counter_display).to_have_text(f"Counter: {i}")
+
+def test_normal_input_text_field(page: Page):
+    page.goto('https://quickpizza.grafana.com/browser.php')
+
+    input_text_field = page.locator("#text1")
+    text_info = page.locator("#text-info-display")
+
+    expect(text_info).to_have_text("No interaction")
+
+    # focus on field
+    input_text_field.focus()
+    expect(text_info).to_have_text("focused on input text field")
+    
+    # focus on out of field
+    input_text_field.blur()
+    expect(text_info).to_have_text("focused out off input text field")
+
+    # fill in the text field
+    input_text_field.fill("Hai") # data type not yet tested.
+    expect(text_info).to_have_text("Thanks for filling in the input text field")
+
+    input_text_field.clear()
+    expect(text_info).to_have_text("You've just removed everything from the input text field")

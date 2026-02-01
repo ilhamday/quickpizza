@@ -143,3 +143,21 @@ def test_hidden_field_text(page:Page):
     page.goto('https://quickpizza.grafana.com/browser.php')
 
     expect(page.locator("#input-text-hidden")).to_be_hidden()
+
+def test_select_number(page:Page):
+    page.goto('https://quickpizza.grafana.com/browser.php')
+
+    select_number_area = page.locator("#numbers-options")
+    select_info_display = page.locator("#select-multiple-info-display")
+
+    select_labels = ["Zero","One","Two","Three","Four","Five"]
+    select_values = ["zero","one","two","three","four","five"]
+
+    # select & assert each number one by one
+    for select_label, select_value in zip(select_labels, select_values):
+        select_number_area.select_option(label=select_label)
+        expect(select_info_display).to_have_text(f"Selected: {select_value}")
+
+    # select all numbers & assert them
+    select_number_area.select_option(select_labels)
+    expect(select_info_display).to_have_text("Selected: " + " ".join(select_values))

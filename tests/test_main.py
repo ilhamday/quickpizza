@@ -161,3 +161,14 @@ def test_select_number(page:Page):
     # select all numbers & assert them
     select_number_area.select_option(select_labels)
     expect(select_info_display).to_have_text("Selected: " + " ".join(select_values))
+
+def test_select_color(page:Page):
+    page.goto('https://quickpizza.grafana.com/browser.php')
+    
+    select_color = page.locator("#colors-options")
+
+    expect(select_color).to_have_value("none")
+
+    select_color.select_option(label="Red")
+    expect(select_color).to_have_value("red")
+    # expect(select_color.locator("option:checked")).to_have_text("Red")
